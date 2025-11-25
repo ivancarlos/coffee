@@ -44,10 +44,17 @@ PACKAGE         := $(shell [ -f "$(APK)" ] && $(AAPT) dump badging "$(APK)" 2>/d
 # ----------  CONFIGURAÇÕES Qt E ANDROID ----------
 
 # Versão do Qt instalada
-QT_VERSION       ?= 6.10.0
+QT_VERSION       ?= 6.5.3
 
 # Diretório base da instalação do Qt
-QT_BASE          ?= $(HOME)/Qt
+QT_BASE          ?= $(HOME)/.config/env/qt
+# ############################################################################
+# ```{bash}
+# cd ${HOME}/.config/env/qt
+# aqt install-qt linux desktop 6.5.3 gcc_64
+# aqt install-qt linux desktop 6.5.3 gcc_64 -m qtquick3d
+# ```
+##############################################################################
 
 # Caminho do Android NDK
 ANDROID_NDK_ROOT ?= $(HOME)/Android/Sdk/ndk/26.1.10909125
@@ -271,6 +278,9 @@ android-arm64_v8a:
 		-DANDROID_SDK_ROOT=$(ANDROID_SDK_ROOT) \
 		-DANDROID_NDK=$(ANDROID_NDK_ROOT) \
 		-DCMAKE_FIND_ROOT_PATH=$(QT_BASE)/$(QT_VERSION)/android_arm64_v8a
+
+fix:
+	cp gradle.properties build/android-build
 
 ## android-armv7: Configura CMake para Android ARM 32-bit (legacy)
 android-armv7:
